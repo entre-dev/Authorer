@@ -22,7 +22,7 @@ jobs :
         run : |
           VERSION="${REF_NAME#refs/heads/feature}"
           echo "VERSION=v${VERSION}" >> $GITHUB_ENV
-          echo "BRANCH_NAME=b${VERSION}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=feature${VERSION}" >> $GITHUB_ENV
           echo "TAG_NAME=v${VERSION}" >> $GITHUB_ENV
       - name : config user git
         run : |
