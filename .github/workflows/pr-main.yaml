@@ -1,5 +1,5 @@
 name: PRs to main
-on: 
+on:
   pull_request:
     branches: [main]
     types: [closed]
