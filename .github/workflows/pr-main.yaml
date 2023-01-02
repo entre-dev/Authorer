@@ -13,12 +13,12 @@ jobs:
     - uses: actions/checkout@v2
     - name: Set Git config
       run: |
-          git config --local user.email ${{ github.event.pusher.email }}
-          git config --local user.name "Github Actions"
+          git config --global user.email "${{ github.event.pusher.email }}"
+          git config --global user.name "${{ github.actor }}"
     - name: Merge main back to dev
       run: |
           git fetch --unshallow
-          git checkout dev
+          git checkout develop
           git pull
           git merge --no-ff main -m "Auto-merge main back to dev"
           git push
