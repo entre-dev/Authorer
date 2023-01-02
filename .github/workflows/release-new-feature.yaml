@@ -21,9 +21,9 @@ jobs :
       - name : Set env var
         run : |
           VERSION="${REF_NAME#refs/heads/feature}"
-          echo "VERSION=v${VERSION}" >> $GITHUB_ENV
+          echo "VERSION=release${VERSION}" >> $GITHUB_ENV
           echo "BRANCH_NAME=feature${VERSION}" >> $GITHUB_ENV
-          echo "TAG_NAME=v${VERSION}" >> $GITHUB_ENV
+          echo "TAG_NAME=release${VERSION}" >> $GITHUB_ENV
       - name : config user git
         run : |
           git config --global user.email "${{ github.event.pusher.email }}"
