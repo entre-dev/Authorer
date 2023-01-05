@@ -1,6 +1,6 @@
-import Image from "next/image";
 import { useState } from "react";
 import * as COMPONENT from "../../components";
+import CoreLayout from "../../layouts/coreLayout";
 
 const Login = () => {
   const [errorMsg, setErrorMsg] = useState<{
@@ -11,18 +11,7 @@ const Login = () => {
     password: "",
   });
   return (
-    <div className="flex h-[100vh] w-[100vw] items-center justify-center bg-[#1e0d30]">
-      <Image
-        src="/svg/bg.svg"
-        alt="svg bg"
-        className="absolute top-0 left-0 h-[100vh] w-[100vw]"
-        priority={true}
-        width={1920}
-        height={1080}
-        style={{
-          objectFit: "cover",
-        }}
-      />
+    <CoreLayout>
       <div className="w-[90%] max-w-[30rem] rounded-lg border-none bg-white bg-opacity-10 bg-clip-padding px-4 py-8 backdrop-blur-lg backdrop-filter md:max-w-[25rem]">
         <div className="text-center text-3xl text-white">SIGN IN</div>
 
@@ -75,10 +64,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <div className="absolute bottom-3 right-3 text-gray-400">
-        <p className="m-0">Power by Authorer ©</p>
-      </div>
-    </div>
+    </CoreLayout>
   );
 };
 

@@ -23,8 +23,9 @@ function InputText({ errorMsg, rightIcon, metaData }: Props) {
             type={metaData.type}
             className={clsx(
               `w-full rounded-lg border border-l-2 border-t-0 border-r-0 border-b-0 bg-gray-200
-                bg-opacity-10 p-4 pr-12 text-sm text-gray-200 focus:outline-0`,
-              { "border-red-600": errorMsg }
+                bg-opacity-10 p-4 text-sm text-gray-200 focus:outline-0`,
+              { "border-red-600": errorMsg },
+              { "pr-12": rightIcon }
             )}
             placeholder={`Enter ${metaData.text}`}
           />
