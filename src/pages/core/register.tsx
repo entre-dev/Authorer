@@ -1,26 +1,8 @@
-import React, { ReactElement } from "react";
-import CoreLayout from "../../layouts/coreLayout";
+import React from "react";
+import type { ReactElement } from "react";
+import * as Layout from "../../layouts";
 import * as COMPONENT from "../../components";
 import Link from "next/link";
-
-const EmailIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className="h-5 w-5 text-gray-400"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-      />
-    </svg>
-  );
-};
 
 const Register = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
@@ -55,7 +37,7 @@ const Register = () => {
       type: "email",
       value: "",
       errorMsg: "",
-      rightIcon: <EmailIcon />,
+      rightIcon: <COMPONENT.icon.Email />,
     },
     {
       name: "password",
@@ -94,7 +76,7 @@ const Register = () => {
     },
   ]);
   return (
-    <CoreLayout>
+    <Layout.CoreLayout>
       <div className="w-[90%] max-w-[35rem] rounded-lg border-none bg-white bg-opacity-10 bg-clip-padding px-4 py-8 backdrop-blur-lg backdrop-filter md:max-w-[30rem]">
         <p className="text-1xl text-center text-purple-400">{`Let's Start Endless`}</p>
         <h1 className="text-center text-2xl text-white">WELCOME USER!!</h1>
@@ -199,7 +181,7 @@ const Register = () => {
           </button>
         </div>
       </div>
-    </CoreLayout>
+    </Layout.CoreLayout>
   );
 };
 

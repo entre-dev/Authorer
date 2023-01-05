@@ -1,53 +1,70 @@
-import { useState } from "react";
+import { ReactElement, useState } from "react";
 import * as COMPONENT from "../../components";
-import CoreLayout from "../../layouts/coreLayout";
+import * as Layout from "../../layouts";
 
 const Login = () => {
-  const [errorMsg, setErrorMsg] = useState<{
-    email: string;
-    password: string;
-  }>({
-    email: "",
-    password: "",
-  });
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.name, e.target.value);
+    setFormData((prev) => {
+      return prev.map((item) => {
+        if (item.name === e.target.name) {
+          return {
+            ...item,
+            value: e.target.value,
+          };
+        }
+        return item;
+      });
+    });
+  };
+  const [formData, setFormData] = useState<
+    {
+      name: string;
+      text: string;
+      type: "email" | "text" | "password";
+      value: string;
+      errorMsg: string;
+      rightIcon?: ReactElement;
+    }[]
+  >([
+    {
+      name: "email",
+      text: "Email",
+      type: "email",
+      value: "",
+      errorMsg: "",
+      rightIcon: <COMPONENT.icon.Email />,
+    },
+    {
+      name: "password",
+      text: "Password",
+      type: "password",
+      value: "",
+      errorMsg: "",
+    },
+  ]);
   return (
-    <CoreLayout>
+    <Layout.CoreLayout>
       <div className="w-[90%] max-w-[30rem] rounded-lg border-none bg-white bg-opacity-10 bg-clip-padding px-4 py-8 backdrop-blur-lg backdrop-filter md:max-w-[25rem]">
         <div className="text-center text-3xl text-white">SIGN IN</div>
 
         <div className="mx-auto mt-8 mb-0 max-w-md space-y-4">
-          <COMPONENT.common.InputText
-            errorMsg={errorMsg.email}
-            rightIcon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                />
-              </svg>
-            }
-            metaData={{
-              name: "email",
-              text: "Email",
-              type: "email",
-            }}
-          />
-          <COMPONENT.common.InputText
-            errorMsg={errorMsg.password}
-            metaData={{
-              name: "password",
-              text: "Password",
-              type: "password",
-            }}
-          />
+          {formData.map((item) => {
+            return (
+              <COMPONENT.common.InputText
+                key={item.name}
+                value={item.value}
+                errorMsg={item.errorMsg}
+                rightIcon={item.rightIcon || undefined}
+                metaData={{
+                  name: item.name,
+                  text: item.text,
+                  type: item.type,
+                }}
+                onChange={handleValueChange}
+              />
+            );
+          })}
           <div className="flex items-center justify-between">
             <p className="text-sm text-gray-500">
               No account?
@@ -64,7 +81,7 @@ const Login = () => {
           </div>
         </div>
       </div>
-    </CoreLayout>
+    </Layout.CoreLayout>
   );
 };
 
