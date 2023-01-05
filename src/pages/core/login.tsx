@@ -1,6 +1,15 @@
 import Image from "next/image";
+import { useState } from "react";
+import clsx from "clsx";
 
-const login = () => {
+const Login = () => {
+  const [errorMsg, setErrorMsg] = useState<{
+    email: string;
+    password: string;
+  }>({
+    email: "Error",
+    password: "",
+  });
   return (
     <div className="flex h-[100vh] w-[100vw] items-center justify-center bg-[#1e0d30]">
       <Image
@@ -25,8 +34,11 @@ const login = () => {
             <div className="relative">
               <input
                 type="email"
-                className="w-full rounded-lg border border-l-2 border-t-0 border-r-0 border-b-0 bg-gray-200
-                bg-opacity-10 p-4 pr-12 text-sm text-gray-200 focus:outline-0"
+                className={clsx(
+                  `w-full rounded-lg border border-l-2 border-t-0 border-r-0 border-b-0 bg-gray-200
+                bg-opacity-10 p-4 pr-12 text-sm text-gray-200 focus:outline-0`,
+                  { "border-red-600": errorMsg.email }
+                )}
                 placeholder="Enter email"
               />
               <span className="absolute inset-y-0 right-4 inline-flex items-center">
@@ -47,6 +59,9 @@ const login = () => {
               </span>
             </div>
           </div>
+          {errorMsg.email && (
+            <small className="text-red-500">{errorMsg.email}</small>
+          )}
           <div>
             <label htmlFor="password" className="sr-only">
               Password
@@ -83,4 +98,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
