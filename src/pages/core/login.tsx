@@ -14,7 +14,7 @@ const login = () => {
           objectFit: "cover",
         }}
       />
-      <div className="min-h-[70%] w-[90%] max-w-[30rem] rounded-lg border-none bg-white bg-opacity-10 bg-clip-padding px-2 py-4 backdrop-blur-lg backdrop-filter md:max-w-[25rem]">
+      <div className="w-[90%] max-w-[30rem] rounded-lg border-none bg-white bg-opacity-10 bg-clip-padding px-4 py-8 backdrop-blur-lg backdrop-filter md:max-w-[25rem]">
         <div className="text-center text-3xl text-white">SIGN IN</div>
 
         <div className="mx-auto mt-8 mb-0 max-w-md space-y-4">
@@ -25,7 +25,8 @@ const login = () => {
             <div className="relative">
               <input
                 type="email"
-                className="w-full rounded-lg border border-t-0 border-r-0 border-l-0 bg-transparent p-4 pr-12 text-sm text-gray-200 shadow-md focus:outline-0"
+                className="w-full rounded-lg border border-l-2 border-t-0 border-r-0 border-b-0 bg-gray-200
+                bg-opacity-10 p-4 pr-12 text-sm text-gray-200 focus:outline-0"
                 placeholder="Enter email"
               />
               <span className="absolute inset-y-0 right-4 inline-flex items-center">
@@ -53,7 +54,8 @@ const login = () => {
             <div className="relative">
               <input
                 type="password"
-                className="w-full rounded-lg border border-t-0 border-r-0 border-l-0 bg-transparent p-4 pr-12 text-sm text-gray-200 focus:outline-0"
+                className="w-full rounded-lg border border-l-2 border-t-0 border-r-0 border-b-0 bg-gray-200
+                bg-opacity-10 p-4 pr-12 text-sm text-gray-200 focus:outline-0"
                 placeholder="Enter password"
               />
             </div>
