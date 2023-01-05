@@ -1,56 +1,121 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import CoreLayout from "../../layouts/coreLayout";
 import * as COMPONENT from "../../components";
 import Link from "next/link";
 
+const EmailIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5 text-gray-400"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+      />
+    </svg>
+  );
+};
+
 const Register = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
+  const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.name, e.target.value);
+
+    setFormData((prev) => {
+      return prev.map((item) => {
+        if (item.name === e.target.name) {
+          return {
+            ...item,
+            value: e.target.value,
+          };
+        }
+        return item;
+      });
+    });
+  };
+  const [formData, setFormData] = React.useState<
+    {
+      name: string;
+      text: string;
+      type: "email" | "text" | "password";
+      value: string;
+      errorMsg: string;
+      rightIcon?: ReactElement;
+    }[]
+  >([
+    {
+      name: "email",
+      text: "Email",
+      type: "email",
+      value: "",
+      errorMsg: "",
+      rightIcon: <EmailIcon />,
+    },
+    {
+      name: "password",
+      text: "Password",
+      type: "password",
+      value: "",
+      errorMsg: "",
+    },
+    {
+      name: "confirmPassword",
+      text: "Confirm Password",
+      type: "password",
+      value: "",
+      errorMsg: "",
+    },
+    {
+      name: "fullName",
+      text: "Full name",
+      type: "text",
+      value: "",
+      errorMsg: "",
+    },
+    {
+      name: "username",
+      text: "Username",
+      type: "text",
+      value: "",
+      errorMsg: "",
+    },
+    {
+      name: "phone",
+      text: "Phone",
+      type: "text",
+      value: "",
+      errorMsg: "",
+    },
+  ]);
   return (
     <CoreLayout>
       <div className="w-[90%] max-w-[35rem] rounded-lg border-none bg-white bg-opacity-10 bg-clip-padding px-4 py-8 backdrop-blur-lg backdrop-filter md:max-w-[30rem]">
         <p className="text-1xl text-center text-purple-400">{`Let's Start Endless`}</p>
         <h1 className="text-center text-2xl text-white">WELCOME USER!!</h1>
         <div className="mx-auto mt-8 mb-0 max-w-md space-y-4">
-          <COMPONENT.common.InputText
-            errorMsg={""}
-            rightIcon={
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                />
-              </svg>
-            }
-            metaData={{
-              name: "email",
-              text: "Email",
-              type: "email",
-            }}
-          />
-          <COMPONENT.common.InputText
-            errorMsg={""}
-            metaData={{
-              name: "password",
-              text: "Password",
-              type: "password",
-            }}
-          />
-          <COMPONENT.common.InputText
-            errorMsg={""}
-            metaData={{
-              name: "confirmPassword",
-              text: "Confirm Password",
-              type: "password",
-            }}
-          />
+          {formData.slice(0, 3).map((item) => {
+            return (
+              <COMPONENT.common.InputText
+                key={item.name}
+                value={item.value}
+                errorMsg={item.errorMsg}
+                rightIcon={item.rightIcon}
+                metaData={{
+                  name: item.name,
+                  text: item.text,
+                  type: item.type,
+                }}
+                onChange={handleValueChange}
+              />
+            );
+          })}
+
           <div
             onClick={() => setDropdown(!dropdown)}
             className="flex cursor-pointer items-center justify-between border-l-2 border-t-0 border-b-0 border-r-0 border-gray-400 pl-4 transition-all hover:rounded hover:bg-purple-500 hover:bg-opacity-5"
@@ -97,30 +162,22 @@ const Register = () => {
           </div>
           {dropdown && (
             <div className="mx-auto mt-8 mb-0 max-w-md space-y-4">
-              <COMPONENT.common.InputText
-                errorMsg={""}
-                metaData={{
-                  name: "username",
-                  text: "Username",
-                  type: "text",
-                }}
-              />
-              <COMPONENT.common.InputText
-                errorMsg={""}
-                metaData={{
-                  name: "fullname",
-                  text: "Full Name",
-                  type: "text",
-                }}
-              />
-              <COMPONENT.common.InputText
-                errorMsg={""}
-                metaData={{
-                  name: "phone",
-                  text: "Phone Number",
-                  type: "text",
-                }}
-              />
+              {formData.slice(3, 6).map((item) => {
+                return (
+                  <COMPONENT.common.InputText
+                    key={item.name}
+                    value={item.value}
+                    errorMsg={item.errorMsg}
+                    rightIcon={item.rightIcon}
+                    metaData={{
+                      name: item.name,
+                      text: item.text,
+                      type: item.type,
+                    }}
+                    onChange={handleValueChange}
+                  />
+                );
+              })}
             </div>
           )}
         </div>

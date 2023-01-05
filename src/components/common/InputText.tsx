@@ -3,7 +3,9 @@ import clsx from "clsx";
 
 type Props = {
   errorMsg?: string;
-  rightIcon?: React.ReactElement;
+  rightIcon?: React.ReactNode | JSX.Element;
+  value: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   metaData: {
     name: string;
     type: "email" | "text" | "password";
@@ -11,7 +13,7 @@ type Props = {
   };
 };
 
-function InputText({ errorMsg, rightIcon, metaData }: Props) {
+function InputText({ errorMsg, rightIcon, onChange, value, metaData }: Props) {
   return (
     <>
       <div className="bg-none">
@@ -20,6 +22,9 @@ function InputText({ errorMsg, rightIcon, metaData }: Props) {
         </label>
         <div className="relative">
           <input
+            name={metaData.name}
+            onChange={onChange}
+            value={value}
             type={metaData.type}
             className={clsx(
               `w-full rounded-lg border border-l-2 border-t-0 border-r-0 border-b-0 bg-gray-200
