@@ -3,7 +3,8 @@ import CoreLayout from "../../layouts/coreLayout";
 import * as COMPONENT from "../../components";
 import Link from "next/link";
 
-const register = () => {
+const Register = () => {
+  const [dropdown, setDropdown] = React.useState<boolean>(false);
   return (
     <CoreLayout>
       <div className="w-[90%] max-w-[35rem] rounded-lg border-none bg-white bg-opacity-10 bg-clip-padding px-4 py-8 backdrop-blur-lg backdrop-filter md:max-w-[30rem]">
@@ -50,52 +51,78 @@ const register = () => {
               type: "password",
             }}
           />
-          <div className="flex cursor-pointer items-center justify-between border-l-2 border-t-0 border-b-0 border-r-0 border-gray-400 pl-4 transition-all hover:rounded hover:bg-purple-500 hover:bg-opacity-5">
+          <div
+            onClick={() => setDropdown(!dropdown)}
+            className="flex cursor-pointer items-center justify-between border-l-2 border-t-0 border-b-0 border-r-0 border-gray-400 pl-4 transition-all hover:rounded hover:bg-purple-500 hover:bg-opacity-5"
+          >
             <h2 className="text-md text-gray-400">{`Personal Information (optional)`}</h2>
             <span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="icon icon-tabler icon-tabler-caret-down"
-                width={44}
-                height={44}
-                viewBox="0 0 24 24"
-                strokeWidth={1}
-                stroke="#9ca3af"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M18 15l-6 -6l-6 6h12" transform="rotate(180 12 12)" />
-              </svg>
+              {dropdown ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="icon icon-tabler icon-tabler-caret-up"
+                  width={44}
+                  height={44}
+                  viewBox="0 0 24 24"
+                  strokeWidth={1}
+                  stroke="#9ca3af"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path d="M18 15l-6 -6l-6 6h12" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="icon icon-tabler icon-tabler-caret-down"
+                  width={44}
+                  height={44}
+                  viewBox="0 0 24 24"
+                  strokeWidth={1}
+                  stroke="#9ca3af"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                  <path
+                    d="M18 15l-6 -6l-6 6h12"
+                    transform="rotate(180 12 12)"
+                  />
+                </svg>
+              )}
             </span>
           </div>
-          <div className="mx-auto mt-8 mb-0 max-w-md space-y-4">
-            <COMPONENT.common.InputText
-              errorMsg={""}
-              metaData={{
-                name: "username",
-                text: "Username",
-                type: "text",
-              }}
-            />
-            <COMPONENT.common.InputText
-              errorMsg={""}
-              metaData={{
-                name: "fullname",
-                text: "Full Name",
-                type: "text",
-              }}
-            />
-            <COMPONENT.common.InputText
-              errorMsg={""}
-              metaData={{
-                name: "phone",
-                text: "Phone Number",
-                type: "text",
-              }}
-            />
-          </div>
+          {dropdown && (
+            <div className="mx-auto mt-8 mb-0 max-w-md space-y-4">
+              <COMPONENT.common.InputText
+                errorMsg={""}
+                metaData={{
+                  name: "username",
+                  text: "Username",
+                  type: "text",
+                }}
+              />
+              <COMPONENT.common.InputText
+                errorMsg={""}
+                metaData={{
+                  name: "fullname",
+                  text: "Full Name",
+                  type: "text",
+                }}
+              />
+              <COMPONENT.common.InputText
+                errorMsg={""}
+                metaData={{
+                  name: "phone",
+                  text: "Phone Number",
+                  type: "text",
+                }}
+              />
+            </div>
+          )}
         </div>
         <div className="mt-3 flex items-center justify-between">
           <p className="text-sm text-gray-500">
@@ -111,7 +138,7 @@ const register = () => {
             type="submit"
             className="inline-block rounded-lg bg-purple-500 px-5 py-3 text-sm font-medium text-white"
           >
-            Sign in
+            Sign Up
           </button>
         </div>
       </div>
@@ -119,4 +146,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;
