@@ -24,6 +24,7 @@ model Users {
   Session      Session[]
   RefreshToken RefreshToken[]
   Audit        Audit[]
+  Accept       Accept[]
 }
 
 model Session {
@@ -61,6 +62,7 @@ model Client {
   secret    String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Accept    Accept[]
 }
 
 model Audit {
@@ -70,4 +72,30 @@ model Audit {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   User      Users    @relation(fields: [userId], references: [id])
+}
+
+model Accept {
+  id          String        @id @default(uuid())
+  userId      Int
+  cliendId    String
+  User        Users         @relation(fields: [userId], references: [id])
+  Client      Client        @relation(fields: [cliendId], references: [id])
+  AcceptScope AcceptScope[]
+}
+
+model Scope {
+  id          String        @id @default(uuid())
+  name        String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  AcceptScope AcceptScope[]
+}
+
+model AcceptScope {
+  acceptId String
+  scopeId  String
+  Accept   Accept @relation(fields: [acceptId], references: [id])
+  Scope    Scope  @relation(fields: [scopeId], references: [id])
+
+  @@id([acceptId, scopeId])
 }
