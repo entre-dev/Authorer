@@ -1,5 +1,6 @@
 import { NewUser } from './../configs/@type';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
+import type { UserJwtPayload, IGetUserAuthInfoRequest } from './../configs/@type';
 import { HTTP_STATUS } from '../configs/constant';
 import * as USER_SERVICE from '../services/user.serv'
 import z from 'zod';
@@ -84,5 +85,33 @@ export const signIn = async (req: Request, res: Response) => {
     console.error(e);
 
     return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send({ message: e });
+  }
+}
+
+export const signUpDeveloper = async (req: IGetUserAuthInfoRequest, res: Response) => {
+  try {
+
+    const jwtObject = req.jwtObject as UserJwtPayload;
+
+    const user = await USER_SERVICE.$getUser(jwtObject.id);
+
+    if (!user.data) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: 'User not found' });
+    }
+
+    const { done, message } = await USER_SERVICE.$addDeveloper(user.data);
+
+    if (!done) {
+      return res.status(HTTP_STATUS.BAD_REQUEST).send({ message });
+    }
+
+    return res.status(HTTP_STATUS.CREATED).send({ message });
+
+  } catch (error: unknown) {
+
+    console.log(error);
+
+    return res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).send({ message: error });
+
   }
 }
