@@ -3,6 +3,7 @@ import type { ReactElement } from "react";
 import * as Layout from "../../layouts";
 import * as COMPONENT from "../../components";
 import Link from "next/link";
+import z from "zod";
 
 const Register = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
@@ -14,6 +15,7 @@ const Register = () => {
         if (item.name === e.target.name) {
           return {
             ...item,
+            errorMsg: "",
             value: e.target.value,
           };
         }
@@ -21,6 +23,53 @@ const Register = () => {
       });
     });
   };
+
+  const submitForm = () => {
+    console.log("submit");
+    // validate form using zod library.
+
+    const ZodCheckFrom = z.object({
+      email: z.string().email(),
+      password: z.string().min(8),
+      confirmPassword: z.string().min(8),
+      fullName: z.string().optional(),
+      username: z.string().optional(),
+      phone: z.string().optional(),
+    });
+
+    const result = ZodCheckFrom.safeParse(
+      Object.assign(
+        {},
+        {
+          email: formData[0]?.value,
+          password: formData[1]?.value,
+          confirmPassword: formData[2]?.value,
+          fullName: formData[3]?.value,
+          username: formData[4]?.value,
+          phone: formData[5]?.value,
+        }
+      )
+    );
+    if (!result.success) {
+      setFormData((prev) => {
+        const newFormData = prev.map((item) => {
+          console.log(item.name, result.error.issues);
+          const error = result.error.issues.find(
+            (v) => v.path[0] === item.name
+          );
+          if (!error) return item;
+
+          return {
+            ...item,
+            errorMsg: error.message,
+          };
+        });
+
+        return newFormData;
+      });
+    }
+  };
+
   const [formData, setFormData] = React.useState<
     {
       name: string;
@@ -174,8 +223,9 @@ const Register = () => {
             </Link>
           </p>
           <button
-            type="submit"
-            className="inline-block rounded-lg bg-purple-500 px-5 py-3 text-sm font-medium text-white"
+            onClick={submitForm}
+            type="button"
+            className="inline-block cursor-pointer rounded-lg bg-purple-500 px-5 py-3 text-sm font-medium text-white"
           >
             Sign Up
           </button>
