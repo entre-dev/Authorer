@@ -13,7 +13,7 @@
   "scripts": {
     "tsc": "npm run lint && tsc",
     "lint": "eslint . --ext .ts",
-    "dev": "nodemon --trace-warnings src/app.ts"
+    "dev": "nodemon --trace-warnings app.ts"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.109",

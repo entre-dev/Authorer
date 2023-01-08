@@ -13,7 +13,13 @@
     },
     "categories": {
       "function": {
-        "authorerfn": {}
+        "authorerfn": {
+          "deploymentBucketName": "amplify-authorer-dev-120955-deployment",
+          "s3Key": "amplify-builds/authorerfn-77773864435538736867-build.zip"
+        }
+      },
+      "api": {
+        "apiauthorer": {}
       }
     }
   }

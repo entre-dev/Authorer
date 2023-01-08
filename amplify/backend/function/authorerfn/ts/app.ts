@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import type { NextFunction, Request, Response } from "express";
 import express from "express";
 
-// import * as routers from './routers';
+import * as routers from './routes'
 
 // declare a new express app
 const app = express();
@@ -19,9 +19,12 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   next();
 });
 
-app.use("/api/v1/auth", () => { return })
+app.use("/api/v1/auth", routers.auth.default);
+app.get('/testGet', (req: Request, res: Response) => {
+  res.status(200).send("Hello world");
+})
 
-app.listen(3000, function () {
+app.listen(9999, function () {
   console.log("App started");
 });
 
