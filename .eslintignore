@@ -1,0 +1,8 @@
+node_modules/
+public/
+build/
+
+aws-exports.js
+
+*.css
+*.svg

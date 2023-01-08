@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/api/v1/auth": {
+      "name": "/api/v1/auth",
+      "lambdaFunction": "authorerfn",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

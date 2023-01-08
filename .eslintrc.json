@@ -1,11 +1,48 @@
 {
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": ["@typescript-eslint"],
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "plugins": ["@typescript-eslint", "prettier"],
   "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   "rules": {
-    "@typescript-eslint/consistent-type-imports": "warn"
+    "@typescript-eslint/consistent-type-imports": "warn",
+    /**
+     * @description rules of eslint official
+     */
+    "import/prefer-default-export": "off", // Allow single Named-export
+
+    "@typescript-eslint/consistent-type-definitions": "off", // Allow interface and type
+
+    /**
+     * @description rules of @typescript-eslint
+     */
+    "@typescript-eslint/type-annotation-spacing": ["warn"],
+    "indent": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/no-floating-promises": ["warn"],
+    "react/jsx-filename-extension": "off",
+    "import/extensions": "off",
+    "import/no-extraneous-dependencies": "off",
+
+    /**
+     * @description rules of eslint-plugin-import
+     */
+    "import/no-unresolved": "off",
+
+    /**
+     * @description rules of prettier
+     */
+    "prettier/prettier": "off"
   }
 }

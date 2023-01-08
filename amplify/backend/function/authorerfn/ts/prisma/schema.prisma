@@ -6,6 +6,96 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "cockroachdb"
   url      = env("DATABASE_URL")
+}
+
+model Users {
+  id           Int            @id @default(sequence())
+  email        String         @unique
+  password     String
+  name         String?
+  phone        String?
+  profilePic   String?
+  username     String         @unique @default(cuid())
+  prefixPhone  String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Session      Session[]
+  RefreshToken RefreshToken[]
+  Audit        Audit[]
+  Accept       Accept[]
+}
+
+model Session {
+  id        Int      @id @default(sequence())
+  userId    Int
+  expires   DateTime
+  session   String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      Users    @relation(fields: [userId], references: [id])
+}
+
+model VerificationRequest {
+  id         Int      @id @default(sequence())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model RefreshToken {
+  id        Int      @id @default(sequence())
+  userId    Int
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      Users    @relation(fields: [userId], references: [id])
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  name      String
+  secret    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Accept    Accept[]
+}
+
+model Audit {
+  id        Int      @id @default(sequence())
+  userId    Int
+  action    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      Users    @relation(fields: [userId], references: [id])
+}
+
+model Accept {
+  id          String        @id @default(uuid())
+  userId      Int
+  cliendId    String
+  User        Users         @relation(fields: [userId], references: [id])
+  Client      Client        @relation(fields: [cliendId], references: [id])
+  AcceptScope AcceptScope[]
+}
+
+model Scope {
+  id          String        @id @default(uuid())
+  name        String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  AcceptScope AcceptScope[]
+}
+
+model AcceptScope {
+  acceptId String
+  scopeId  String
+  Accept   Accept @relation(fields: [acceptId], references: [id])
+  Scope    Scope  @relation(fields: [scopeId], references: [id])
+
+  @@id([acceptId, scopeId])
 }
