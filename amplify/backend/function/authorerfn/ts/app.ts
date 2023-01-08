@@ -24,7 +24,7 @@ app.get('/testGet', (req: Request, res: Response) => {
   res.status(200).send("Hello world");
 })
 
-app.listen(9999, function () {
+app.listen(3000, function () {
   console.log("App started");
 });
 
