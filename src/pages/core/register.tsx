@@ -8,8 +8,6 @@ import z from "zod";
 const Register = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name, e.target.value);
-
     setFormData((prev) => {
       return prev.map((item) => {
         if (item.name === e.target.name) {
@@ -33,8 +31,8 @@ const Register = () => {
       password: z.string().min(8),
       confirmPassword: z.string().min(8),
       fullName: z.string().optional(),
-      username: z.string().optional(),
-      phone: z.string().optional(),
+      username: z.string().optional().or(z.string().min(4)),
+      phone: z.string().optional().or(z.string().min(8)),
     });
 
     const result = ZodCheckFrom.safeParse(
@@ -53,7 +51,6 @@ const Register = () => {
     if (!result.success) {
       setFormData((prev) => {
         const newFormData = prev.map((item) => {
-          console.log(item.name, result.error.issues);
           const error = result.error.issues.find(
             (v) => v.path[0] === item.name
           );
