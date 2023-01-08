@@ -19,7 +19,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   next();
 });
 
-// app.use("/users", routers.userRoute)
+app.use("/api/v1/auth", () => { return })
 
 app.listen(3000, function () {
   console.log("App started");
