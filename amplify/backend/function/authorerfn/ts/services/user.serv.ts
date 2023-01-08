@@ -46,3 +46,57 @@ export const $addUser = async (user: NewUser) => {
 
   }
 }
+
+export const $getUser = async (id: number) => {
+  try {
+
+    const user = await prisma.users.findUnique({
+      where: {
+        id
+      }
+    })
+
+    return {
+      done: true,
+      message: 'User found',
+      data: user
+    }
+
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessages(error)
+
+    return {
+      done: false,
+      message: errorMessage,
+      data: null
+    }
+
+  }
+}
+
+export const $getUserByEmail = async (email: string) => {
+  try {
+
+    const user = await prisma.users.findUnique({
+      where: {
+        email
+      }
+    })
+
+    return {
+      done: true,
+      message: 'User found',
+      data: user
+    }
+
+  } catch (error: unknown) {
+    const errorMessage = getErrorMessages(error)
+
+    return {
+      done: false,
+      message: errorMessage,
+      data: null
+    }
+
+  }
+}
