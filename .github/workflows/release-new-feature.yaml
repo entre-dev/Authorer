@@ -1,0 +1,44 @@
+name : feature-release
+run-name: ${{ github.actor }} is releasing new feature
+on :
+  push :
+    branches:
+      - feature/*
+
+jobs :
+  ci-tag:
+    runs-on : ubuntu-latest
+    env : 
+      REF_NAME : ${{ github.ref }}
+    steps:
+      - uses : actions/checkout@v3
+        with:
+          token : ${{ secrets.PUSH_FEATURE }}
+      - uses : actions/setup-node@v3
+        with : 
+          node-version : 16
+          cache : 'yarn'
+      - name : Set env var
+        run : |
+          VERSION="${REF_NAME#refs/heads/feature}"
+          echo "VERSION=release${VERSION}" >> $GITHUB_ENV
+          echo "BRANCH_NAME=feature${VERSION}" >> $GITHUB_ENV
+          echo "TAG_NAME=release${VERSION}" >> $GITHUB_ENV
+      - name : config user git
+        run : |
+          git config --global user.email "${{ github.event.pusher.email }}"
+          git config --global user.name "${{ github.actor }}"
+      - run : npm install -g yarn
+      - run : yarn --frozen-lockfile
+      - name : build
+        run : yarn build
+      # - name : test
+      #   run : yarn lint && yarn test:ci
+      - name : Merge feature to dev
+        run : |
+          git fetch --unshallow
+          git checkout develop
+          git merge ${{ env.BRANCH_NAME }}
+          git push origin develop
+          git tag -a ${{ env.TAG_NAME }} -m "my version ${{ env.VERSION }}" || echo "created tag done"
+          git push origin develop --tags
