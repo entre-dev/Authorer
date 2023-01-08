@@ -1,0 +1,9 @@
+{
+  "function": {
+    "authorerfn": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
+}
