@@ -1,4 +1,5 @@
-import { ReactElement, useState } from "react";
+import { useState } from "react";
+import type { ReactElement } from "react";
 import * as COMPONENT from "../../components";
 import * as Layout from "../../layouts";
 
