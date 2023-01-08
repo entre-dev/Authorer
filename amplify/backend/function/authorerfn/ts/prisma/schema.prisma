@@ -11,17 +11,19 @@ datasource db {
 }
 
 model Users {
-  id          Int       @id @default(sequence())
-  email       String    @unique
-  password    String
-  name        String?
-  phone       String?
-  profilePic  String?
-  username    String    @unique @default(cuid())
-  prefixPhone String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  Session     Session[]
+  id           Int            @id @default(sequence())
+  email        String         @unique
+  password     String
+  name         String?
+  phone        String?
+  profilePic   String?
+  username     String         @unique @default(cuid())
+  prefixPhone  String?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  Session      Session[]
+  RefreshToken RefreshToken[]
+  Audit        Audit[]
 }
 
 model Session {
@@ -41,4 +43,31 @@ model VerificationRequest {
   expires    DateTime
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+}
+
+model RefreshToken {
+  id        Int      @id @default(sequence())
+  userId    Int
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      Users    @relation(fields: [userId], references: [id])
+}
+
+model Client {
+  id        String   @id @default(uuid())
+  name      String
+  secret    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Audit {
+  id        Int      @id @default(sequence())
+  userId    Int
+  action    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      Users    @relation(fields: [userId], references: [id])
 }
