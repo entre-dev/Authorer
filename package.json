@@ -6,7 +6,10 @@
     "build": "next build",
     "dev": "next dev",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "func:build": "cd amplify/backend/function/authorerfn/ts && npm install && npm run tsc && cd -",
+    "func:update": "cd amplify/backend/function/authorerfn/src && npm install && cd -",
+    "func:updatedb": "cd amplify/backend/function/authorerfn/src && npx prisma db pull && npx prisma generate && cd -"
   },
   "dependencies": {
     "clsx": "^1.2.1",
