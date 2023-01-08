@@ -25,6 +25,7 @@ model Users {
   RefreshToken RefreshToken[]
   Audit        Audit[]
   Accept       Accept[]
+  Client       Client[] // this client mean the developer account
 }
 
 model Session {
@@ -56,13 +57,16 @@ model RefreshToken {
   User      Users    @relation(fields: [userId], references: [id])
 }
 
+// Developer account
 model Client {
   id        String   @id @default(uuid())
-  name      String
+  userId    Int
+  clientId  String   @unique
   secret    String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Accept    Accept[]
+  User      Users    @relation(fields: [userId], references: [id])
 }
 
 model Audit {
