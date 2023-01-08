@@ -13,7 +13,7 @@ export const $addUser = async (user: NewUser) => {
 
     if (!hashedPassword) throw new Error('Internal server error')
 
-    await prisma.users.create({
+    const newUser = await prisma.users.create({
       data: {
         name: user.name,
         email: user.email,
@@ -22,6 +22,13 @@ export const $addUser = async (user: NewUser) => {
         prefixPhone
       }
     });
+
+    await prisma.audit.create({
+      data: {
+        action: 'create account',
+        userId: newUser.id,
+      }
+    })
 
     return {
       done: true,
