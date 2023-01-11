@@ -15,7 +15,7 @@
       "function": {
         "authorerfn": {
           "deploymentBucketName": "amplify-authorer-dev-120955-deployment",
-          "s3Key": "amplify-builds/authorerfn-77773864435538736867-build.zip"
+          "s3Key": "amplify-builds/authorerfn-67693551734e49776579-build.zip"
         }
       },
       "api": {

@@ -4,6 +4,7 @@ import * as Layout from "../../layouts";
 import * as COMPONENT from "../../components";
 import Link from "next/link";
 import z from "zod";
+import axios from "axios";
 
 const Register = () => {
   const [dropdown, setDropdown] = React.useState<boolean>(false);
@@ -22,7 +23,7 @@ const Register = () => {
     });
   };
 
-  const submitForm = () => {
+  const submitForm = async () => {
     console.log("submit");
     // validate form using zod library.
 
@@ -65,6 +66,20 @@ const Register = () => {
         return newFormData;
       });
     }
+
+    const loginData = await axios.post(
+      `${process.env.NEXT_PUBLIC_API_ENDPOINT_DEV}/v1/auth/register`,
+      {
+        email: formData[0]?.value,
+        password: formData[1]?.value,
+        confirmPassword: formData[2]?.value,
+        fullName: formData[3]?.value,
+        username: formData[4]?.value,
+        phone: formData[5]?.value,
+      }
+    );
+
+    console.log({ loginData });
   };
 
   const [formData, setFormData] = React.useState<

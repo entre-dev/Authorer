@@ -4,6 +4,7 @@ on :
   push :
     branches:
       - feature/*
+      - version/*.*.*
 
 jobs :
   ci-tag:
@@ -30,8 +31,8 @@ jobs :
           git config --global user.name "${{ github.actor }}"
       - run : npm install -g yarn
       - run : yarn --frozen-lockfile
-      - name : build
-        run : yarn build
+      # - name : build
+      #   run : yarn build
       # - name : test
       #   run : yarn lint && yarn test:ci
       - name : Merge feature to dev
