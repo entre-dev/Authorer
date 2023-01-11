@@ -8,7 +8,6 @@ import * as routers from './routes'
 // declare a new express app
 const app = express();
 
-
 app.use(bodyParser.json());
 app.use(awsServerlessExpressMiddleware.eventContext());
 
@@ -20,11 +19,11 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 });
 
 app.use("/api/v1/auth", routers.auth.default);
-app.get('/testGet', (req: Request, res: Response) => {
-  res.status(200).send("Hello world");
+app.get('/testGet2', (req: Request, res: Response) => {
+  res.status(200).send("Hello world2");
 })
 
-app.listen(9999, function () {
+app.listen(3000, function () {
   console.log("App started");
 });
 
