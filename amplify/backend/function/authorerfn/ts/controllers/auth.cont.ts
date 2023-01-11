@@ -70,7 +70,9 @@ export const signIn = async (req: Request, res: Response) => {
       return res.status(HTTP_STATUS.BAD_REQUEST).send({ message: 'Email or Password is not correct' });
     }
 
-    const userAccessToken = jwt.sign({ id: data.id }, process.env.JWT_SECRET || '', { expiresIn: '1d' });
+    if (!process.env.JWT_SECRET) throw new Error('JWT_SECRET is not defined')
+
+    const userAccessToken = jwt.sign({ id: data.id }, process.env.JWT_SECRET, { expiresIn: '1d' });
     const csrfToken = v4();
 
     res.cookie('csrfToken', csrfToken, {
