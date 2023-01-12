@@ -9,3 +9,24 @@ import dotenv from 'dotenv';
 import { v4 } from 'uuid';
 
 dotenv.config();
+
+const getUserInfoFromThirdParty = async (req: Request, res: Response) => {
+  try {
+
+    const {
+      userAccessToken,
+    } = req.params;
+
+    const {
+      scope,
+      serverAccessToken,
+    } = req.query;
+
+
+    return res.sendStatus(HTTP_STATUS.NOT_IMPLEMENTED)
+  } catch (e) {
+    console.error(e);
+
+    return res.sendStatus(HTTP_STATUS.INTERNAL_SERVER_ERROR);
+  }
+}
