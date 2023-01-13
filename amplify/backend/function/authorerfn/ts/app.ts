@@ -19,6 +19,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 });
 
 app.use("/api/v1/auth", routers.auth.default);
+app.use('/api/v1/user', routers.user.default);
 app.get('/testGet2', (req: Request, res: Response) => {
   res.status(200).send("Hello world2");
 })

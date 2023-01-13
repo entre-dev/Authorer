@@ -1,4 +1,4 @@
-import { NewUser } from './../configs/@type';
+import type { NewUser } from './../configs/@type';
 import type { Request, Response } from 'express';
 import type { UserJwtPayload, IGetUserAuthInfoRequest } from './../configs/@type';
 import { HTTP_STATUS } from '../configs/constant';
