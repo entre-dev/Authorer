@@ -13,8 +13,10 @@
     "func:updatedb--soft": "cd amplify/backend/function/authorerfn/src && npx prisma generate && cd -"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.6",
     "aws-amplify": "^5.0.8",
     "axios": "^1.2.2",
+    "chart.js": "^4.1.2",
     "clsx": "^1.2.1",
     "next": "13.0.2",
     "react": "18.2.0",
